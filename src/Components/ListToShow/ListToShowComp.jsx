@@ -5,7 +5,7 @@ import { AiFillEdit } from 'react-icons/ai';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 
 const ListToShowComp = () => {
-   
+
     const {
         CurrentValue, setCurrentValue,
         currentList, setcurrentList,
@@ -20,7 +20,7 @@ const ListToShowComp = () => {
         console.log(newList);
         setcurrentList(newList)
     }
-   
+
 
     const editFunc = (id) => {
         const edit = currentList.find((ele) => {
@@ -30,34 +30,47 @@ const ListToShowComp = () => {
         setIsEditing(id)
 
     }
-
+    const toggleComplete = (taskId) => {
+        const updatedTasks = currentList.map((task) => {
+          if (task.id === taskId) {
+            return { ...task, completed: !task.completed };
+          }
+          return task;
+        });
+        setcurrentList(updatedTasks);
+      };
+    
     return (
         <>
-           <div className='listToShowContainer'>
-            {currentList.map((ele) => {
-                return (
+            <div className='listToShowContainer'>
+                {currentList.map((ele) => {
+                    return (
                         <div className="list">
                             <div className="checkbox">
-                                <input type="checkbox" name="" id="" />
+                                <input type="checkbox"
+                                    checked={ele.completed}
+                                    onChange={() => toggleComplete(ele.id)} />
                             </div>
                             <div className="items">
-                                <p >{ele.CurrentValue}</p>
+                                <p style={{
+                                    textDecoration: ele.completed ? 'line-through' : 'none',
+                                }}>{ele.CurrentValue}</p>
                             </div>
                             <div className="btns">
-                                <button  style={{ color: "orange" }}onClick={() => {
+                                <button style={{ color: "orange" }} onClick={() => {
                                     editFunc(ele.id)
                                     settoggleButton(false)
-                                }}><AiFillEdit/></button>
+                                }}><AiFillEdit /></button>
 
-                                <button  style={{ color: "grey" }} onClick={() => {
-                                        deleteFunc(ele.id)
-                                    }}><RiDeleteBin5Fill/></button>
+                                <button style={{ color: "grey" }} onClick={() => {
+                                    deleteFunc(ele.id)
+                                }}><RiDeleteBin5Fill /></button>
                             </div>
                         </div>
-                   
-                );
-            })}
-             </div>
+
+                    );
+                })}
+            </div>
         </>
     )
 }

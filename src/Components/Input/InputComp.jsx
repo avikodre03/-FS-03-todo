@@ -26,7 +26,7 @@ const InputComp = () => {
             settoggleButton(true)
             setIsEditing(null)
         } else {
-            setcurrentList([...currentList, { CurrentValue: CurrentValue, id: Date.now() }])
+            setcurrentList([...currentList, { CurrentValue: CurrentValue, id: Date.now(), completed: false }])
             setCurrentValue("")
             setDisabled(true)
         }
